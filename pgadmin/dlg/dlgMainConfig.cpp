@@ -107,7 +107,7 @@ dlgMainConfig::dlgMainConfig(pgFrame *parent, pgSettingItem *_item) :
 	txtComment->SetValue(item->newLine->comment);
 
 	wxFont fntLabel = stName->GetFont();
-	fntLabel.SetWeight(wxFONTWEIGHT_EXTRABOLD);
+	fntLabel.SetWeight(wxBOLD);
 	stName->SetFont(fntLabel);
 	stName->SetLabel(item->name);
 

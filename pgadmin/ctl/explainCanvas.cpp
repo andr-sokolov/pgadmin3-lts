@@ -344,7 +344,7 @@ void ExplainText::OnPaint(wxPaintEvent &ev)
 
 	wxFont stdFont = settings->GetSystemFont();
 	wxFont boldFont = stdFont;
-	boldFont.SetWeight(wxFONTWEIGHT_BOLD);
+	boldFont.SetWeight(wxBOLD);
 
 	int x = GetCharHeight() / 2;
 	int y = GetCharHeight() / 2;

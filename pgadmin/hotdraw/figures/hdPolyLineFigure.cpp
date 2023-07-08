@@ -42,7 +42,7 @@ hdPolyLineFigure::hdPolyLineFigure()
 	startPoint = hdPoint(0, 0);
 	endPoint = hdPoint(0, 0);
 	pointAtPos = hdPoint(0, 0);
-	linePen = wxPen(wxString(wxT("BLACK")), 1, wxPENSTYLE_SOLID);
+	linePen = wxPen(wxString(wxT("BLACK")), 1, wxSOLID);
 }
 
 hdPolyLineFigure::~hdPolyLineFigure()
