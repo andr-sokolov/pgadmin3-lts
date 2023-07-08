@@ -766,7 +766,7 @@ wxString pgTable::GetSql(ctlTree *browser)
 			{
 				while (!set->Eof())
 				{
-					sql += wxT("CREATE STATISTICS ") + set->GetVal(0) + " ON " + set->GetVal(1) + " FROM " + GetQuotedFullIdentifier() + wxT("\n");
+					sql += wxT("CREATE STATISTICS ") + set->GetVal(0) + wxT(" ON ") + set->GetVal(1) + wxT(" FROM ") + GetQuotedFullIdentifier() + wxT("\n");
 					set->MoveNext();
 				}
 				delete set;
@@ -1523,7 +1523,7 @@ pgObject *pgTableFactory::CreateObjects(pgCollection *collection, ctlTree *brows
 	long gp_segments = 1;
 	if (collection->GetConnection()->GetIsGreenplum())
 	{
-		query = wxT("SELECT count(*) AS gp_segments from pg_catalog.gp_configuration where definedprimary = 't' and content >= 0");
+		query = wxT("SELECT count(*) AS gp_segments from pg_catalog.gp_segment_configuration where role = 'p' and content >= 0");
 		gp_segments = StrToLong(collection->GetDatabase()->ExecuteScalar(query));
 		if (gp_segments <= 1)
 			gp_segments = 1;
@@ -1571,7 +1571,7 @@ pgObject *pgTableFactory::CreateObjects(pgCollection *collection, ctlTree *brows
 			query += wxT(", substring(array_to_string(rel.reloptions, ',') FROM 'fillfactor=([0-9]*)') AS fillfactor \n");
 		if (collection->GetConnection()->GetIsGreenplum())
 		{
-			query += wxT(", gpd.localoid, gpd.attrnums \n");
+			query += wxT(", gpd.localoid, 0 attrnums \n");
 			query += wxT(", substring(array_to_string(rel.reloptions, ',') from 'appendonly=([a-z]*)') AS appendonly \n");
 			query += wxT(", substring(array_to_string(rel.reloptions, ',') from 'compresslevel=([0-9]*)') AS compresslevel \n");
 			query += wxT(", substring(array_to_string(rel.reloptions, ',') from 'orientation=([a-z]*)') AS orientation \n");
@@ -1580,6 +1580,8 @@ pgObject *pgTableFactory::CreateObjects(pgCollection *collection, ctlTree *brows
 			query += wxT(", substring(array_to_string(rel.reloptions, ',') from 'checksum=([a-z]*)') AS checksum \n");
 			if (collection->GetConnection()->GetIsGreenplum() && collection->GetConnection()->BackendMinimumVersion(8, 2, 9))
 				query += wxT(", rel.oid in (select parrelid from pg_partition) as ispartitioned\n");
+			query += wxT(", rel.reloptions AS reloptions, tst.reloptions AS toast_reloptions \n");
+			query += wxT(", (CASE WHEN rel.reltoastrelid = 0 THEN false ELSE true END) AS hastoasttable\n");
 		}
 		else if (collection->GetConnection()->BackendMinimumVersion(8, 4))
 		{

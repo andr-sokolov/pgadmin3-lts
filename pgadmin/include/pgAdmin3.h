@@ -67,8 +67,8 @@ const wxString SERVER_MAX_VERSION_T = wxT("15.255");
 // Supported Greenplum Database and Greenplum HAWQ minimum and maximum values.
 const short GP_MIN_VERSION_N = 0x0802;
 const wxString GP_MIN_VERSION_T = wxT("8.2");
-const short GP_MAX_VERSION_N = 0x0803;
-const wxString GP_MAX_VERSION_T = wxT("8.3");
+const short GP_MAX_VERSION_N = 0x0904;
+const wxString GP_MAX_VERSION_T = wxT("9.4");
 
 // The registry file
 #ifndef __WXMSW__

@@ -106,7 +106,7 @@ pgObject *gpPartitionFactory::CreateObjects(pgCollection *coll, ctlTree *browser
 	// so we need to multiply them by the number of segmentDBs to get reasonable values.
 	long gp_segments = 1;
 
-	query = wxT("SELECT count(*) AS gp_segments from pg_catalog.gp_configuration where definedprimary = 't' and content >= 0");
+	query = wxT("SELECT count(*) AS gp_segments from pg_catalog.gp_segment_configuration where role = 'p' and content >= 0");
 	gp_segments = StrToLong(collection->GetDatabase()->ExecuteScalar(query));
 	if (gp_segments <= 1)
 		gp_segments = 1;
