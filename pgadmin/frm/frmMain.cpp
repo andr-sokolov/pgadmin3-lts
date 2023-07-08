@@ -1066,7 +1066,7 @@ int frmMain::ReconnectServer(pgServer *server, bool restore)
 	wxMilliSleep(100);
 	wxSafeYield();
 
-	int res = server->Connect(this, true, wxEmptyString, false, true);
+	int res = server->Connect(this, false, wxEmptyString, false, true);
 
 	// Check the result, and handle it as appropriate
 	wxTreeItemId item;
