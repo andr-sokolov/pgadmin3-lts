@@ -122,7 +122,7 @@ pgObject *gpPartitionFactory::CreateObjects(pgCollection *coll, ctlTree *browser
 	        wxT("                     WHERE tgrelid=rel.oid) AS isrepl\n");
 
 	query += wxT(", substring(array_to_string(reloptions, ',') from 'fillfactor=([0-9]*)') AS fillfactor \n");
-	query += wxT(", gpd.localoid, gpd.attrnums \n");
+	query += wxT(", gpd.localoid \n");
 	query += wxT(", substring(array_to_string(reloptions, ',') from 'appendonly=([a-z]*)') AS appendonly \n");
 	query += wxT(", substring(array_to_string(reloptions, ',') from 'compresslevel=([0-9]*)') AS compresslevel \n");
 	query += wxT(", substring(array_to_string(reloptions, ',') from 'orientation=([a-z]*)') AS orientation \n");
@@ -184,11 +184,11 @@ pgObject *gpPartitionFactory::CreateObjects(pgCollection *coll, ctlTree *browser
 
 
 			Oid lo = tables->GetOid(wxT("localoid"));
-			wxString db = tables->GetVal(wxT("attrnums"));
-			db = db.Mid(1, db.Length() - 2);
-			table->iSetDistributionColNumbers(db);
-			if (lo > 0 && db.Length() == 0)
-				table->iSetDistributionIsRandom();
+//			wxString db = tables->GetVal(wxT("attrnums"));
+//			db = db.Mid(1, db.Length() - 2);
+//			table->iSetDistributionColNumbers(db);
+//			if (lo > 0 && db.Length() == 0)
+//				table->iSetDistributionIsRandom();
 			table->iSetAppendOnly(tables->GetVal(wxT("appendonly")));
 			table->iSetCompressLevel(tables->GetVal(wxT("compresslevel")));
 			table->iSetOrientation(tables->GetVal(wxT("orientation")));
